@@ -9,5 +9,5 @@ C4.5 is generally used for classification and is oftern referred to as a statist
 
 ### Links
 
-http://www.rulequest.com/Personal/
-https://en.wikipedia.org/wiki/C4.5_algorithm
+- http://www.rulequest.com/Personal/
+- https://en.wikipedia.org/wiki/C4.5_algorithm
