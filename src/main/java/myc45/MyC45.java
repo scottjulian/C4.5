@@ -17,23 +17,24 @@ public class MyC45 {
 		// start loop for all files HERE
 		scan = new Scanner(new File(files[0]));
 		String headerLine = scan.nextLine();
-		String headers[] = headerLine.split(",");
+		String headers[]  = headerLine.split(",");
 		
 		// class index is assumed to be the last column
-		int classIndex = headers.length - 1;
+		int classIndex    = headers.length - 1;
 		int numAttributes = headers.length - 1;
 		
 		// store data set attributes
 		Attribute attributes[] = new Attribute[numAttributes];
-		for(int x = 0; x < numAttributes; x++)
+		for(int x = 0; x < numAttributes; x++) {
 			attributes[x] = new Attribute(headers[x]);
+		}
 		
 		// for storing classes and class count
 		List<String>  classes      = new ArrayList<String>();
 		List<Integer> classesCount = new ArrayList<Integer>();
 		
 		// store are values into respected attributes
-		// along with repspected classes
+		// along with respected classes
 		while(scan.hasNextLine()){
 			Val data = null;
 			String inLine = scan.nextLine();
@@ -49,8 +50,10 @@ public class MyC45 {
 					classes.add(lineData[classIndex]);
 					classesCount.add(classes.indexOf(lineData[classIndex]), 1);
 				}
-				else classesCount.set(classes.indexOf(lineData[classIndex]),
-						classesCount.get(classes.indexOf(lineData[classIndex])) + 1);
+				else {
+					classesCount.set(classes.indexOf(lineData[classIndex]),
+							classesCount.get(classes.indexOf(lineData[classIndex])) + 1);
+				}
 			}
 			
 			// insert data into attributes
@@ -84,10 +87,14 @@ public class MyC45 {
 		inV = new Val("40","no"); age.insertVal(inV);
 		
 		System.out.println(age.toString());
+
 		List<Integer> testCount = new ArrayList<Integer>();
-		testCount.add(9); testCount.add(5);
+		testCount.add(9);
+		testCount.add(5);
+
 		double testIofD = calcIofD(testCount);
 		age.setGain(testIofD,14);
+
 		System.out.println("I of D: " + testIofD);
 		System.out.println("age: " + age.gain);
 		
@@ -104,12 +111,13 @@ public class MyC45 {
 		double temp = 0.0;
 		
 		int totalNumClasses = 0;
-		for(int i : classesCount)
+		for(int i : classesCount){
 			totalNumClasses += i;
+		}
 		
 		for(double d : classesCount){
 			temp = (-1 * (d/totalNumClasses)) * (Math.log((d/totalNumClasses)) / Math.log(2));
-			IofD += temp; temp = 0.0;
+			IofD += temp;
 		}
 		return IofD;
 	}

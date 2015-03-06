@@ -5,9 +5,9 @@ import java.util.List;
 
 
 public class Attribute {
-	public String      name   = new String();
+	public String       name   = new String();
 	public List<Values> values = new ArrayList<Values>();
-	public double gain = 0.0;
+	public double       gain   = 0.0;
 	
 	public Attribute(String name){
 		this.name = name;
@@ -25,7 +25,6 @@ public class Attribute {
 			totalValClasses = 0;
 		}
 		this.gain = IofD - this.gain;
-		
 	}
 	
 	public void insertVal(Val inVal){
