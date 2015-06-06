@@ -1,4 +1,5 @@
-package myc45;
+import c45.Attribute;
+import c45.Value;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.lang.Math;
 
-public class MyC45 {
+public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// .csv data sets
@@ -36,7 +37,7 @@ public class MyC45 {
 		// store are values into respected attributes
 		// along with respected classes
 		while(scan.hasNextLine()){
-			Val data = null;
+			Value data = null;
 			String inLine = scan.nextLine();
 			String lineData[] = inLine.split(",");
 			
@@ -58,33 +59,30 @@ public class MyC45 {
 			
 			// insert data into attributes
 			for(int x = 0; x < numAttributes; x++){
-				data = new Val(lineData[x], lineData[classIndex]);
-				attributes[x].insertVal(data);
+				data = new Value(lineData[x], lineData[classIndex]);
+				attributes[x].insertValue(data);
 			}
 		}
-		int totalNumClasses = 0;
-		for(int i : classesCount){
-			totalNumClasses += i;
-		}
+
 		double IofD = calcIofD(classesCount); // Set information criteria
 		
 		// TESTING DATA 
 		Attribute age = new Attribute("age");
 		
-		Val inV = new Val("30","yes"); age.insertVal(inV);
-		inV = new Val("30","yes"); age.insertVal(inV);
-		inV = new Val("30","no"); age.insertVal(inV);
-		inV = new Val("30","no"); age.insertVal(inV);
-		inV = new Val("30","no"); age.insertVal(inV);
-		inV = new Val("35","yes"); age.insertVal(inV);
-		inV = new Val("35","yes"); age.insertVal(inV);
-		inV = new Val("35","yes"); age.insertVal(inV);
-		inV = new Val("35","yes"); age.insertVal(inV);
-		inV = new Val("40","yes"); age.insertVal(inV);
-		inV = new Val("40","yes"); age.insertVal(inV);
-		inV = new Val("40","yes"); age.insertVal(inV);
-		inV = new Val("40","no"); age.insertVal(inV);
-		inV = new Val("40","no"); age.insertVal(inV);
+		Value inV = new Value("30","yes"); age.insertValue(inV);
+		inV = new Value("30","yes"); age.insertValue(inV);
+		inV = new Value("30","no"); age.insertValue(inV);
+		inV = new Value("30","no"); age.insertValue(inV);
+		inV = new Value("30","no"); age.insertValue(inV);
+		inV = new Value("35","yes"); age.insertValue(inV);
+		inV = new Value("35","yes"); age.insertValue(inV);
+		inV = new Value("35","yes"); age.insertValue(inV);
+		inV = new Value("35","yes"); age.insertValue(inV);
+		inV = new Value("40","yes"); age.insertValue(inV);
+		inV = new Value("40","yes"); age.insertValue(inV);
+		inV = new Value("40","yes"); age.insertValue(inV);
+		inV = new Value("40","no"); age.insertValue(inV);
+		inV = new Value("40","no"); age.insertValue(inV);
 		
 		System.out.println(age.toString());
 
@@ -93,10 +91,10 @@ public class MyC45 {
 		testCount.add(5);
 
 		double testIofD = calcIofD(testCount);
-		age.setGain(testIofD,14);
+		age.calculateGain(testIofD,14);
 
 		System.out.println("I of D: " + testIofD);
-		System.out.println("age: " + age.gain);
+		System.out.println("age: " + age._gain);
 		
 		/*
 		for(Attribute a : attributes){
@@ -108,15 +106,12 @@ public class MyC45 {
 	
 	public static double calcIofD(List<Integer> classesCount){
 		double IofD = 0.0;
-		double temp = 0.0;
-		
 		int totalNumClasses = 0;
 		for(int i : classesCount){
 			totalNumClasses += i;
 		}
-		
 		for(double d : classesCount){
-			temp = (-1 * (d/totalNumClasses)) * (Math.log((d/totalNumClasses)) / Math.log(2));
+			double temp = (-1 * (d/totalNumClasses)) * (Math.log((d/totalNumClasses)) / Math.log(2));
 			IofD += temp;
 		}
 		return IofD;
