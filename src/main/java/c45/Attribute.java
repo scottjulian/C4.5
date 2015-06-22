@@ -1,37 +1,36 @@
 package c45;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Attribute {
-	public String       _name   = new String();
-	public double       _gain   = 0.0;
-	public List<ValuesWrapper> _valuesWrapperList = new ArrayList<ValuesWrapper>();
+	public String _name   = new String();
+	public double _gain   = 0;
+	public ArrayList<ValuesWrapper> _valuesWrapperList = new ArrayList<ValuesWrapper>();
 
 	public Attribute(String name){
 		_name = name;
 	}
 
-	public void calculateGain(double IofD, int totalNumClasses){
+	private void calculateGain(double info, int totalNumClasses){
 		int totalValClasses = 0;
 		for(ValuesWrapper valWrapper : _valuesWrapperList){
-			valWrapper.calculateGain();
-			for(int i : valWrapper._classesCount){
+			for(int i : valWrapper.getClassesCount()){
 				totalValClasses += i;
 			}
-			_gain += (totalValClasses/(double)totalNumClasses) * valWrapper._gain;
+			_gain += (totalValClasses/(double)totalNumClasses) * valWrapper.getGain();
 			totalValClasses = 0;
 		}
-		_gain = IofD - _gain;
+		_gain = info - _gain;
 	}
 
 	public void insertValue(Value inValue){
+        _gain = 0;
 		if(_valuesWrapperList.isEmpty()){
 			_valuesWrapperList.add(new ValuesWrapper(inValue._name, inValue._itClass));
 		}
 		else{
 			for(ValuesWrapper valWrapper : _valuesWrapperList){
-				if(valWrapper._name.equals(inValue._name)){
+				if(valWrapper.getName().equals(inValue._name)){
 					valWrapper.update(inValue);
 					return;
 				}
@@ -40,20 +39,27 @@ public class Attribute {
 		}
 	}
 
-	public void insertValue(String name, String itClass){
-		insertValue(new Value(name, itClass));
+	public String getName(){
+		return _name;
 	}
+
+    public double getGain(double info, int totalNumClasses){
+        if(_gain == 0){
+            calculateGain(info, totalNumClasses);
+        }
+        return _gain;
+    }
 
 	public String toString(){
 		String out = new String("attribute: " + _name + "\n");
 		for(ValuesWrapper valWrapper : _valuesWrapperList) {
-			out += "\tvalue: " + valWrapper._name + ", ";
+			out += "\tvalue: " + valWrapper.getName() + ", ";
 			out += "\n\t\tclasses: ";
-			for (String c : valWrapper._classes) {
+			for (String c : valWrapper.getClasses()) {
 				out += c + ", ";
 			}
 			out += "\n\t\tcounts: ";
-			for (Integer i : valWrapper._classesCount) {
+			for (Integer i : valWrapper.getClassesCount()) {
 				out += i + ", ";
 			}
 			out += "\n";
