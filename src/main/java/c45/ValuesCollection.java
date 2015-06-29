@@ -2,13 +2,13 @@ package c45;
 
 import java.util.ArrayList;
 
-public class ValuesWrapper {
+public class ValuesCollection {
 	private String _name;
 	private double _gain = 0;
 	private ArrayList<String>  _classes      = new ArrayList<String>();
 	private ArrayList<Integer> _classesCount = new ArrayList<Integer>();
 
-	public ValuesWrapper(String valName, String newClass){
+	public ValuesCollection(String valName, String newClass){
 		_name = valName;
 		_classes.add(newClass);
 		_classesCount.add(1);

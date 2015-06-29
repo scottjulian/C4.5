@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Attribute {
 	public String _name   = new String();
 	public double _gain   = 0;
-	public ArrayList<ValuesWrapper> _valuesWrapperList = new ArrayList<ValuesWrapper>();
+	public ArrayList<ValuesCollection> _valuesCollectionList = new ArrayList<ValuesCollection>();
 
 	public Attribute(String name){
 		_name = name;
@@ -13,7 +13,7 @@ public class Attribute {
 
 	private void calculateGain(double info, int totalNumClasses){
 		int totalValClasses = 0;
-		for(ValuesWrapper valWrapper : _valuesWrapperList){
+		for(ValuesCollection valWrapper : _valuesCollectionList){
 			for(int i : valWrapper.getClassesCount()){
 				totalValClasses += i;
 			}
@@ -25,17 +25,17 @@ public class Attribute {
 
 	public void insertValue(Value inValue){
         _gain = 0;
-		if(_valuesWrapperList.isEmpty()){
-			_valuesWrapperList.add(new ValuesWrapper(inValue._name, inValue._itClass));
+		if(_valuesCollectionList.isEmpty()){
+			_valuesCollectionList.add(new ValuesCollection(inValue._name, inValue._itClass));
 		}
 		else{
-			for(ValuesWrapper valWrapper : _valuesWrapperList){
+			for(ValuesCollection valWrapper : _valuesCollectionList){
 				if(valWrapper.getName().equals(inValue._name)){
 					valWrapper.update(inValue);
 					return;
 				}
 			}
-			_valuesWrapperList.add(new ValuesWrapper(inValue._name, inValue._itClass));
+			_valuesCollectionList.add(new ValuesCollection(inValue._name, inValue._itClass));
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Attribute {
 
 	public String toString(){
 		String out = new String("attribute: " + _name + "\n");
-		for(ValuesWrapper valWrapper : _valuesWrapperList) {
+		for(ValuesCollection valWrapper : _valuesCollectionList) {
 			out += "\tvalue: " + valWrapper.getName() + ", ";
 			out += "\n\t\tclasses: ";
 			for (String c : valWrapper.getClasses()) {
